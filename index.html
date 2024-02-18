@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Player</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 30vw; /* 50% of viewport width */
+            color: white;
+            text-align: center;
+            user-select: none; 
+        }
+    </style>
+</head>
+<body>
+    <video id="videoPlayer" autoplay loop onclick="changeVideo()"></video>
+    <div class="overlay">ALIKI</div>
+    <audio id="bgMusic" loop>
+        <source src="videos/Aftersun.mp3" type="audio/mpeg">
+        <!-- Add more <source> elements if you have alternative audio formats -->
+    </audio>
+
+    <script>
+        const videos = [
+    "videos/video1.mp4",
+    "videos/video2.mp4",
+    "videos/video3.mp4",
+    "videos/video4.mp4",
+    "videos/video5.mp4",
+    "videos/video6.mp4",
+    "videos/video7.mp4",
+    "videos/video8.mp4",
+    "videos/video9.mp4",
+    "videos/video10.mp4",
+    "videos/video11.mp4",
+    "videos/video12.mp4",
+    "videos/video13.mp4",
+    "videos/video14.mp4",
+    "videos/video15.mp4",
+    "videos/video16.mp4",
+    "videos/video17.mp4",
+    "videos/video18.mp4",
+    "videos/video19.mp4",
+    "videos/video20.mp4",
+    "videos/video21.mp4",
+    "videos/video22.mp4",
+    "videos/video23.mp4",
+    "videos/video24.mp4",
+    "videos/video25.mp4",
+    "videos/video26.mp4",
+    "videos/video27.mp4",
+    "videos/video28.mp4",
+    "videos/video29.mp4",
+    "videos/video30.mp4",
+    "videos/video31.mp4",
+    "videos/video32.mp4",
+    "videos/video33.mp4",
+    "videos/video34.mp4",
+    "videos/video35.mp4",
+    "videos/video36.mp4",
+    "videos/video37.mp4",
+    "videos/video38.mp4",
+    "videos/video39.mp4",
+    "videos/video40.mp4",
+    "videos/video41.mp4",
+    "videos/video42.mp4",
+    "videos/video43.mp4",
+    "videos/video44.mp4",
+    "videos/video45.mp4",
+    "videos/video46.mp4",
+    "videos/video47.mp4",
+    "videos/video48.mp4",
+    "videos/video49.mp4",
+    "videos/video50.mp4",
+    "videos/video51.mp4",
+    "videos/video52.mp4",
+    "videos/video53.mp4",
+    "videos/video54.mp4",
+    "videos/video55.mp4",
+    "videos/video56.mp4",
+    "videos/video57.mp4",
+    "videos/video58.mp4",
+    "videos/video59.mp4",
+    "videos/video60.mp4"
+];
+
+
+        let currentVideoIndex = 0;
+        const videoPlayer = document.getElementById('videoPlayer');
+        const bgMusic = document.getElementById('bgMusic');
+
+        function changeVideo() {
+             // Start playing background music
+            currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+            videoPlayer.src = videos[currentVideoIndex];
+            videoPlayer.play();
+            if (!bgMusic.paused) return; // If music is already playing, do nothing
+            bgMusic.play();
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        shuffleArray(videos);
+
+        // Set initial video
+        videoPlayer.src = videos[currentVideoIndex];
+        videoPlayer.volume = 0.3;
+    </script>
+</body>
+</html>
