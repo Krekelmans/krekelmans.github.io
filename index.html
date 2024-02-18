@@ -112,6 +112,14 @@
         const videoPlayer = document.getElementById('videoPlayer');
         const bgMusic = document.getElementById('bgMusic');
 
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
         function changeVideo() {
             currentVideoIndex = (currentVideoIndex + 1) % videos.length;
             videoPlayer.src = videos[currentVideoIndex];
@@ -126,6 +134,7 @@
             }
         }
 
+        shuffleArray(videos);
         // Set initial video
         videoPlayer.src = videos[currentVideoIndex];
         videoPlayer.volume = 0.3;
