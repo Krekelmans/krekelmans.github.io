@@ -64,6 +64,7 @@
             font-family: 'Montserrat', sans-serif;
             font-size: 1.5rem; /* Adjust as needed */
             display: none;
+            z-index: 2;
         }
         .song-title.visible {
             display: block;
@@ -194,7 +195,16 @@ const songTitles = [
             }
         }
 
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
         function changeSong() {
+            changeVideo();
     currentSongIndex = (currentSongIndex + 1) % songs.length;
     bgMusic.src = songs[currentSongIndex];
     updateSongTitle();
@@ -218,12 +228,12 @@ const songTitles = [
             videoElement.src = videos[currentVideoIndex];
             videoElement.load();
         }
-        //shuffleArray(videos);
+        shuffleArray(videos);
         videoPlayer1.src = videos[currentVideoIndex];
         //videoPlayer2.src = videos[(currentVideoIndex + 1) % videos.length];
 
         document.body.addEventListener('click', startMusic);
-        document.body.addEventListener('dblclick', changeSong);
+        songTitleElement.addEventListener('click', changeSong);
     </script>
 </body>
 </html>
