@@ -4,23 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video Player</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        @font-face {
-    font-family: 'Antique Olive';
-    src: url('../../videos/antique.woff2') format('woff2'),/* Legacy Browsers */
-         url('../../videos/antique.woff') format('woff'),
-         url('../../videos/antique.ttf') format('truetype');
-            font-weight:normal;
-    font-style:normal;
-}
-        
+
         body, html {
             background-color: black;
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
+            overflow: hidden;
             position: relative;
         }
         .video-container {
@@ -52,12 +45,28 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: "Antique Olive", Montserrat, sans-serif;
-            font-size: 64px;
+            font-family: 'Antique Olive';
+            font-size: 64px; /* 50% of viewport width */
             color: white;
             text-align: center;
             user-select: none; 
             z-index: 1;
+        }
+        .song-title {
+            position: fixed;
+            bottom: 20px; /* Adjust as needed */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem; /* Adjust as needed */
+            display: none;
+        }
+        .song-title.visible {
+            display: block;
         }
     </style>
 </head>
@@ -72,6 +81,7 @@
     <audio id="bgMusic" loop>
         <source src="videos/Aftersun.mp3" type="audio/mpeg">
     </audio>
+    <div class="song-title" id="songTitle">Aliki - Mira</div>
 
     <script>
         const videos = [
@@ -137,61 +147,83 @@
     "videos/video60.mp4"
 ];
 
+        const songs = [
+            "videos/Aftersun.mp3",
+            "videos/Nokiaremix.mp3",
+            "videos/Uffieremix.mp3",
+            "videos/Feel.mp3",
+];
+
+const songTitles = [
+            "Aliki - Mira",
+            "Aliki - I like him",
+            "Aliki - Drugs",
+            "Aliki - Feel"
+];
         let currentVideoIndex = 0;
+        let currentSongIndex = 0;
         const videoPlayer1 = document.getElementById('videoPlayer1');
         const videoPlayer2 = document.getElementById('videoPlayer2');
         const bgMusic = document.getElementById('bgMusic');
-
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
+        const songTitleElement = document.getElementById('songTitle');
 
         function changeVideo() {
-            currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+            const clickPositionX = event.clientX;
+
+            if (clickPositionX > window.innerWidth / 2) {
+                currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+            } else {
+                currentVideoIndex = (currentVideoIndex - 1 + videos.length) % videos.length;
+            }
 
             if (videoPlayer1.paused) {
                 videoPlayer2.classList.remove('visible');
                 videoPlayer1.classList.add('visible');
+                songTitleElement.classList.add('visible');
                 videoPlayer1.play();
-                preloadNextVideo(videoPlayer2); // Start playing background music
+                preloadNextVideo(videoPlayer2);
             } else {
                 videoPlayer1.classList.remove('visible');
                 videoPlayer2.classList.add('visible');
                 videoPlayer2.play();
                 preloadNextVideo(videoPlayer1);
             }
-            
 
-            // Start background music if not already playing
             if (bgMusic.paused) {
                 bgMusic.play();
             }
         }
 
+        function changeSong() {
+    currentSongIndex = (currentSongIndex + 1) % songs.length;
+    bgMusic.src = songs[currentSongIndex];
+    updateSongTitle();
+    bgMusic.load();
+    bgMusic.play();
+        }
+
+
         function startMusic() {
             if (bgMusic.paused) {
-                bgMusic.play(); // Start playing background music
+                updateSongTitle();
+                bgMusic.play();
             }
+        }
+        function updateSongTitle() {
+            songTitleElement.textContent = songTitles[currentSongIndex];
+           // songTitleElement.classList.add('visible');
         }
 
         function preloadNextVideo(videoElement) {
-            const nextIndex = (currentVideoIndex + 1) % videos.length;
-            videoElement.src = videos[nextIndex];
+            videoElement.src = videos[currentVideoIndex];
             videoElement.load();
         }
-
-        shuffleArray(videos);
-        // Set initial videos
+        //shuffleArray(videos);
         videoPlayer1.src = videos[currentVideoIndex];
-        videoPlayer2.src = videos[(currentVideoIndex + 1) % videos.length];
-        //videoPlayer1.classList.add('visible');
+        //videoPlayer2.src = videos[(currentVideoIndex + 1) % videos.length];
 
-        // Add event listener for music on body click
         document.body.addEventListener('click', startMusic);
+        document.body.addEventListener('dblclick', changeSong);
     </script>
 </body>
 </html>
