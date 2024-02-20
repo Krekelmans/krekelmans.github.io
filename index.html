@@ -190,6 +190,7 @@ const songTitles = [
             }
 
             if (bgMusic.paused) {
+                updateSongTitle();
                 bgMusic.play();
             }
         }
@@ -212,12 +213,6 @@ const songTitles = [
         }
 
 
-        function startMusic() {
-            if (bgMusic.paused) {
-                updateSongTitle();
-                bgMusic.play();
-            }
-        }
         function updateSongTitle() {
             songTitleElement.textContent = songTitles[currentSongIndex];
            // songTitleElement.classList.add('visible');
@@ -231,7 +226,6 @@ const songTitles = [
         videoPlayer1.src = videos[currentVideoIndex];
         //videoPlayer2.src = videos[(currentVideoIndex + 1) % videos.length];
 
-        document.body.addEventListener('click', startMusic);
         songTitleElement.addEventListener('click', changeSong);
     </script>
 </body>
