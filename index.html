@@ -204,10 +204,9 @@ const songTitles = [
 
         function changeSong() {
             changeVideo();
-            updateSongTitle();
     currentSongIndex = (currentSongIndex + 1) % songs.length;
     bgMusic.src = songs[currentSongIndex];
-    
+    updateSongTitle();
     bgMusic.load();
     bgMusic.play();
         }
