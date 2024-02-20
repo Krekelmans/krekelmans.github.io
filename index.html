@@ -63,7 +63,6 @@
             border-radius: 10px;
             font-family: 'Montserrat', sans-serif;
             font-size: 1.5rem; /* Adjust as needed */
-          
             z-index: 2;
         }
         .song-title.visible {
@@ -82,7 +81,7 @@
     <audio id="bgMusic" loop>
         <source src="videos/Aftersun.mp3" type="audio/mpeg">
     </audio>
-    <div class="song-title" id="songTitle">Aliki - Mira</div>
+    <div class="song-title" id="songTitle"></div>
 
     <script>
         const videos = [
@@ -151,15 +150,16 @@
         const songs = [
             "videos/Aftersun.mp3",
             "videos/Nokiaremix.mp3",
-            "videos/Uffieremix.mp3",
             "videos/Feel.mp3",
+            "videos/Uffieremix.mp3",
 ];
 
 const songTitles = [
             "Aliki - Mira",
             "Aliki - I like him",
+            "Aliki - Feel",
             "Aliki - Drugs",
-            "Aliki - Feel"
+            
 ];
         let currentVideoIndex = 0;
         let currentSongIndex = 0;
@@ -180,7 +180,6 @@ const songTitles = [
             if (videoPlayer1.paused) {
                 videoPlayer2.classList.remove('visible');
                 videoPlayer1.classList.add('visible');
-                songTitleElement.classList.add('visible');
                 videoPlayer1.play();
                 preloadNextVideo(videoPlayer2);
             } else {
@@ -205,9 +204,10 @@ const songTitles = [
 
         function changeSong() {
             changeVideo();
+            updateSongTitle();
     currentSongIndex = (currentSongIndex + 1) % songs.length;
     bgMusic.src = songs[currentSongIndex];
-    updateSongTitle();
+    
     bgMusic.load();
     bgMusic.play();
         }
