@@ -79,7 +79,7 @@
         <video id="videoPlayer2" class="video" loop playsinline muted></video>
     </div>
     <div class="overlay" onclick="changeVideo()">
-        <img src="videos/ALIKI.svg" alt="ALIKI Logo">
+        <img src="videos/introaliki.svg" alt="ALIKI Logo">
     </div>
     <audio id="bgMusic" loop>
         <source src="videos/Aftersun.mp3" type="audio/mpeg">
@@ -170,15 +170,12 @@ const songTitles = [
         const videoPlayer2 = document.getElementById('videoPlayer2');
         const bgMusic = document.getElementById('bgMusic');
         const songTitleElement = document.getElementById('songTitle');
+        const logoElement = document.getElementById('logo');
 
         function changeVideo() {
             const clickPositionX = event.clientX;
 
-            if (clickPositionX > window.innerWidth / 2) {
-                currentVideoIndex = (currentVideoIndex + 1) % videos.length;
-            } else {
-                currentVideoIndex = (currentVideoIndex - 1 + videos.length) % videos.length;
-            }
+            currentVideoIndex = (currentVideoIndex + 1) % videos.length;
 
             if (videoPlayer1.paused) {
                 videoPlayer2.classList.remove('visible');
@@ -193,6 +190,7 @@ const songTitles = [
             }
 
             if (bgMusic.paused) {
+                logoElement.src = 'videos/ALIKI.svg'; 
                 updateSongTitle();
                 bgMusic.play();
             }
